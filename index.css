@@ -14,3 +14,28 @@ body {
 	margin-top: 20px;
 }
 
+body .row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: space-around;
+}
+
+body .card {
+	width: 300px;
+	height: 400px;
+	margin: 0 auto;
+}
+
+body .card-img-top {
+	height: 300px;
+}
+
+body .col-sm-4 {
+	display: inline;
+	margin: 0 auto;
+}
+
+
