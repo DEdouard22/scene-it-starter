@@ -1,10 +1,36 @@
 $(function() {
-    
+
     //jQuery form submit listener:
     $('form').on('submit', function(e){
         e.preventDefault();
+
+        var searchString = $('.search-bar').val();
+        var urlEncodedSearchString = encodeURIComponent(searchString);
+        $.ajax({
+            url: 'http://www.omdbapi.com/?apikey=3430a78&s=' + urlEncodedSearchString,
+            method: "GET",
+            success: function(response){
+                movieData = response.Search;
+                var finalHTML = renderMovies(response.Search);
+                $('.movies-container').html(finalHTML);
+                var watchlistJSON = localStorage.getItem('watchlist');
+
+            var watchlist = JSON.parse(watchlistJSON);
+            watchlist.forEach(function(current){
+            var imdbID = current.imdbID;
+            console.log(imdbID);
+            $("[data-id='"+imdbID+"']").html('ADDED');
+            $("[data-id='"+imdbID+"']").toggleClass('btn-success');    
+        });  
+            }
+        });
+
+        /*
         var finalHTML = renderMovies(movieData);
-        $('.movies-container').html(finalHTML);
+        $('.movies-container').html(finalHTML);*/
+        //Need a way to view what is currently in local storage and prevent user from adding
+        //  the same movie multiple times.
+        
     }); 
 
     $('.movies-container').on('click', '.add-movie', function(){
@@ -29,6 +55,9 @@ $(function() {
         //console.log($(this).prop('disabled'));
         $(this).prop('disabled', true);
         //console.log($(this).prop('disabled'));
+        console.log(this);
+        $(this).html('ADDED');
+		$(this).toggleClass('btn-success');
 
     });
 
